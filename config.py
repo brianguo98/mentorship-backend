@@ -53,6 +53,9 @@ class BaseConfig(object):
     # mail accounts
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
 
+    # pagination of users route defaults to 10 users per page
+    USERS_PER_PAGE = 10
+
     @staticmethod
     def build_db_uri(
         db_type_arg=DB_TYPE,

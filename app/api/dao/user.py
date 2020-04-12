@@ -17,6 +17,7 @@ from app.api.models.mentorship_relation import (
 )
 from app.api.dao.mentorship_relation import MentorshipRelationDAO
 from app.utils.validation_utils import is_email_valid
+from config import BaseConfig
 
 
 class UserDAO:
@@ -143,7 +144,7 @@ class UserDAO:
         return UserModel.find_by_username(username)
 
     @staticmethod
-    def list_users(user_id: int, search_query: str = "", is_verified = None):
+    def list_users(user_id: int, search_query: str = "", page: int = 0, is_verified = None):
         """ Retrieves a list of verified users with the specified ID.
         
         Arguments:
@@ -165,6 +166,8 @@ class UserDAO:
                 users_list,
             )
         ]
+
+        list_of_users = list_of_users[page * BaseConfig.USERS_PER_PAGE: (page * BaseConfig.USERS_PER_PAGE) + BaseConfig.USERS_PER_PAGE]
 
         for user in list_of_users:
             relation = MentorshipRelationDAO.list_current_mentorship_relation(
